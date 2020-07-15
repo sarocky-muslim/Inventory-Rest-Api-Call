@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Modal,
   Button,
@@ -16,6 +16,7 @@ import ReactToPdf from "react-to-pdf";
 
 const InvoicePrintComponent = (props) => {
   const [show, setShow] = useState(false);
+  const [totalPaid, setTotalPaid] = useState(0);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const componentRef = useRef();
@@ -28,8 +29,22 @@ const InvoicePrintComponent = (props) => {
     totalPurchasePrice = 0,
     totalSalePrice = 0,
     totalProfitPrice = 0,
-    totalPaymentAmount = 0,
-    totalCostAmount = 0;
+    totalCostAmount = 0,
+    total = 0;
+
+  const paidAmount = () => {
+    let totalPaidAmount = 0;
+    payments.map((payment, index) => {
+      if (purchase.id === payment.Purchase.id) {
+        totalPaidAmount += payment.Amount;
+      }
+    });
+    setTotalPaid(totalPaidAmount);
+  };
+
+  useEffect(() => {
+    paidAmount();
+  });
 
   return (
     <>
@@ -172,11 +187,29 @@ const InvoicePrintComponent = (props) => {
                       <strong>Total</strong>
                     </Col>
                     <Col>
-                      {Math.ceil(
-                        totalPurchasePrice -
-                          (totalPurchasePrice * purchase.Discount) / 100
-                      )}
+                      {
+                        (total = Math.ceil(
+                          totalPurchasePrice -
+                            (totalPurchasePrice * purchase.Discount) / 100
+                        ))
+                      }
                     </Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item className="p-1">
+                  <Row>
+                    <Col>
+                      <strong>Paid</strong>
+                    </Col>
+                    <Col>{totalPaid}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item className="p-1">
+                  <Row>
+                    <Col>
+                      <strong>Due</strong>
+                    </Col>
+                    <Col>{total - totalPaid}</Col>
                   </Row>
                 </ListGroup.Item>
               </ListGroup>

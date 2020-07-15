@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import {
   Row,
   Col,
@@ -16,10 +16,13 @@ import axios from "axios";
 const NavbarComponent = (props) => {
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("auth")));
   let ol;
-  if (auth.Role == "admin") {
-    ol = "all";
-  } else {
-    ol = auth.Outlet.id;
+
+  if (auth != null) {
+    if (auth.Role == "admin") {
+      ol = "all";
+    } else {
+      ol = auth.Outlet.id;
+    }
   }
   const [outlet, setOutlet] = useState(ol);
   let nowday = moment().format("YYYY-MM-DD");
@@ -115,11 +118,14 @@ const NavbarComponent = (props) => {
     }
   };
 
+  if (auth == null) {
+    return <Redirect to="/login" />;
+  }
   return (
     <Row>
       <Col>
         <Navbar expand="lg">
-          <Navbar.Brand as={NavLink} to="/stock">
+          <Navbar.Brand as={NavLink} to="/">
             Dashboard
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

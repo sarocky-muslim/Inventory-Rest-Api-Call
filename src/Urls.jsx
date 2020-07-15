@@ -20,6 +20,7 @@ import Stock from "./pages/Stock";
 import Login from "./pages/Login";
 import Manager from "./pages/Manager";
 import Stuff from "./pages/Stuff";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const Urls = () => {
@@ -30,6 +31,7 @@ const Urls = () => {
         <Route exact path="/outlet" component={Outlet} />
         <Route exact path="/manager" component={Manager} />
         <Route exact path="/stuff" component={Stuff} />
+        <Route exact path="/profile" component={Profile} />
         <Route exact path="/category" component={Category} />
         <Route exact path="/brand" component={Brand} />
         <Route exact path="/unit" component={Unit} />

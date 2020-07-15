@@ -46,6 +46,7 @@ const DataTableComponent = (props) => {
           if (filter == "") {
             return each;
           } else if (
+            outlet.indexOf(filter) >= 0 ||
             invoiceNumber.indexOf(filter) >= 0 ||
             customer.indexOf(filter) >= 0 ||
             date.indexOf(filter) >= 0
@@ -192,7 +193,11 @@ const DataTableComponent = (props) => {
           </tbody>
           <thead>
             <tr>
-              <th colSpan="4">Total</th>
+              {auth.Role == "admin" ? (
+                <th colSpan="5">Total</th>
+              ) : (
+                <th colSpan="4">Total</th>
+              )}
               <th>{totalAmount}</th>
               <th>{totalPaid}</th>
               <th>{totalDue}</th>

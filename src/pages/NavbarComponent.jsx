@@ -13,7 +13,6 @@ const NavbarComponent = () => {
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("auth")));
 
   const logout = () => {
-    localStorage.removeItem("auth");
     setAuth(localStorage.removeItem("auth"));
   };
 
@@ -72,6 +71,9 @@ const NavbarComponent = () => {
           ) : null}
 
           <NavDropdown alignRight title={auth.Name} id="basic-nav-dropdown">
+            <NavDropdown.Item as={NavLink} to="/profile">
+              Profile
+            </NavDropdown.Item>
             <NavDropdown.Item>{auth.Email}</NavDropdown.Item>
             <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
           </NavDropdown>

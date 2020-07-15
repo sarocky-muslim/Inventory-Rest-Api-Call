@@ -12,9 +12,15 @@ const DataTableComponent = (props) => {
     setDataList(
       data.filter((each) => {
         if (each.Role === "manager") {
+          const outlet = each.Outlet.Name.toLowerCase();
           const name = each.Name.toLowerCase();
           const email = each.Email.toLowerCase();
-          if (name.indexOf(searchText) >= 0 || email.indexOf(searchText) >= 0) {
+
+          if (
+            outlet.indexOf(searchText) >= 0 ||
+            name.indexOf(searchText) >= 0 ||
+            email.indexOf(searchText) >= 0
+          ) {
             return each;
           }
         }
@@ -34,6 +40,7 @@ const DataTableComponent = (props) => {
           <thead>
             <tr>
               <th>#</th>
+              <th>Outlet</th>
               <th>Name</th>
               <th>Email</th>
               <th>Action</th>
@@ -43,6 +50,7 @@ const DataTableComponent = (props) => {
             {dataList.map((manager, index) => (
               <tr key={manager.id}>
                 <td>{index}</td>
+                <td>{manager.Outlet.Name}</td>
                 <td>{manager.Name}</td>
                 <td>{manager.Email}</td>
                 <td>
@@ -61,6 +69,7 @@ const DataTableComponent = (props) => {
           <thead>
             <tr>
               <th>#</th>
+              <th>Outlet</th>
               <th>Name</th>
               <th>Email</th>
               <th>Action</th>
